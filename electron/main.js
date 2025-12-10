@@ -11,7 +11,6 @@ function createWindow() {
     width: 1000,
     height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
     },
@@ -25,6 +24,16 @@ function createWindow() {
   } else {
     // Load built files
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    
+    // Add error handling
+    mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+      console.error('Failed to load:', errorCode, errorDescription);
+    });
+    
+    // Check if page loaded
+    mainWindow.webContents.on('did-finish-load', () => {
+      console.log('Page loaded successfully');
+    });
   }
 
   mainWindow.on('closed', () => {

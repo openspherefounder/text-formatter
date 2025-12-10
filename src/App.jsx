@@ -1,6 +1,7 @@
 // src/App.jsx
 import { useState, useEffect } from 'react';
 import './App.css';
+import logo from '../public/logo.png';
 
 const transformations = [
   { 
@@ -215,7 +216,7 @@ function App() {
         <div className="sidebar-header">
           <div className="brand">
             <div className="brand-icon">
-              <img src="/logo.png" alt="TextForge Logo" />
+              <img src={logo} alt="TextForge Logo" />
             </div>
             <div className="brand-text">
               <h1>TextForge</h1>
