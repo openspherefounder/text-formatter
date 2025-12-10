@@ -1,12 +1,18 @@
 {
   "name": "text-formatter",
+  "version": "1.0.0",
+  "description": "Desktop app to format, clean and enhance text instantly.",
+  "author": "OpenSphere",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
+  "main": "electron/main.js",
   "scripts": {
-    "dev": "vite",
+    "dev:vite": "vite",
+    "dev:electron": "cross-env NODE_ENV=development electron ./electron/main.js",
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
     "build": "vite build",
-    "lint": "eslint .",
+    "postbuild": "electron-builder",
+    "dist": "npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,14 +20,36 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^39.2.6",
+    "electron-builder": "^26.0.12",
     "vite": "^7.2.4"
+  },
+  "build": {
+    "appId": "com.opensphere.textformatter",
+    "productName": "OpenSphere Text Formatter",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": ["dmg"],
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": ["tar.gz", "AppImage"],
+      "icon": "build/icon.png"
+    }
   }
 }
